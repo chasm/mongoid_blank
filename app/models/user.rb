@@ -13,6 +13,9 @@ class User
   field :code, type: String
   field :expires_at, type: Time
   
+  has_many :discussions_joined, class_name: "Discussion", inverse_of: :recipient, autosave: true
+  has_many :discussions_started, class_name: "Discussion", inverse_of: :author, autosave: true
+  
   validates :email, presence: true
   validates :email, uniqueness: { case_sensitive: false }
   validates :password, confirmation: true
