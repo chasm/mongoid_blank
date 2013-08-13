@@ -52,6 +52,10 @@ class ExpectationsController < ApplicationController
   end
   
   def get_expectation
+    if params[:expectation]
+      params[:expectation][:id] = params[:id]
+    end
+    
     if @period
       head :not_found unless @expectation = @period.expectations.find(params[:id])
     end

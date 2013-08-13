@@ -48,6 +48,10 @@ class PeriodsController < ApplicationController
   end
   
   def get_period
+    if params[:period]
+      params[:period][:id] = params[:id]
+    end
+    
     if @design
       @period = @design.periods.find(params[:id])
     end
