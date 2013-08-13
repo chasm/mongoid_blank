@@ -10,3 +10,6 @@ gem 'bcrypt-ruby', require: "bcrypt"
 gem 'activeresource'
 gem 'mongoid', git: 'https://github.com/mongoid/mongoid.git'
 gem 'bson_ext'
+gem "rabl"
+gem "oj"
+gem "gon"
