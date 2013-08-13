@@ -1,5 +1,8 @@
 Design.destroy_all
 
+# Everything is embedded, so destroying the designs empties the db.
+# We'll let MongoDB set the IDs here.
+
 e1 = Expectation.new(
   behavior: "Be cool."
 )

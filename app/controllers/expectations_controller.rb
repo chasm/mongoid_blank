@@ -1,10 +1,12 @@
 class ExpectationsController < ApplicationController
   respond_to :json
   
-  before_action :get_design_and_period
+  before_action :get_design_and_period # We need to find both
   before_action :get_expectation, except: [ :index, :create ]
   
   def index
+    # If the period exists, then so does the design
+    # (see the get_design_and_period method below)
     if @period
       @expectations = @period.expectations
     end
@@ -15,6 +17,8 @@ class ExpectationsController < ApplicationController
   
   def create
     if @period
+      # We create the expectation on the period itself, so we
+      # know exactly what period we're embedding it in.
       if @expectation = @period.expectations.create!(expectation_params)
         render :show, status: :created
       else
@@ -44,6 +48,7 @@ class ExpectationsController < ApplicationController
   
   def get_design_and_period
     if @design = Design.find(params[:design_id])
+      # Get the period from the design's periods array
       unless @period = @design.periods.find(params[:period_id])
         head :bad_request
       end
@@ -54,6 +59,7 @@ class ExpectationsController < ApplicationController
   
   def get_expectation
     if @period
+      # Get the expectation from the period's expectations array
       head :not_found unless @expectation = @period.expectations.find(params[:id])
     end
   end
