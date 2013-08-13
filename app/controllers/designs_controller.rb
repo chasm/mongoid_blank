@@ -11,6 +11,10 @@ class DesignsController < ApplicationController
     head :not_found unless @design
   end
 
+  # We've deleted the create action and moved creation into the
+  # update method. A UUID is always supplied as params[:id].
+  # If we find a design with that ID, then we do an update;
+  # if we don't find a design with that ID, then we create one.
   def update
     if @design
       if @design.update_attributes(design_params)

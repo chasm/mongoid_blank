@@ -1,5 +1,8 @@
 Design.destroy_all
 
+# We have to set our own IDs by generating UUIDs on the server
+# because we are no longer allowing MongoDB to generate them.
+
 e1 = Expectation.new(
   id: SecureRandom.uuid,
   behavior: "Be cool."
