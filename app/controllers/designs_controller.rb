@@ -36,14 +36,21 @@ class DesignsController < ApplicationController
     end
   end
   
+  # We added this method to handle requests for a specific attribute
   def attribute
+    # Check that an attribute was passed and -- IMPORTANT --
+    # check that it is an ALLOWED attribute
     if (attr = params[:attribute]) &&
       %w(id title created_at updated_at).include?(attr)
       
+      # Create a hash with this attribute and its value
       out = Hash.new
       out[attr] = @design.send(attr)
+      
+      # Render the hash as JSON
       render :json => out
     else
+      # No attribute or not in list? Bad request
       head :bad_request
     end
   end
