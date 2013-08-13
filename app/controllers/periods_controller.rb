@@ -1,10 +1,12 @@
 class PeriodsController < ApplicationController
   respond_to :json
   
-  before_action :get_design
+  before_action :get_design # we'll need the parent design
   before_action :get_period, except: [ :index, :create ]
   
   def index
+    # If we don't have the parent design, it falls through
+    # to the 400 bad request set in the get_design method below.
     if @design
       @periods = @design.periods
     end
@@ -15,6 +17,8 @@ class PeriodsController < ApplicationController
   
   def create
     if @design
+      # We create the new period on the design's periods array
+      # so we know exactly which design it is being embedded in.
       if @period = @design.periods.create!(period_params)
         render :show, status: :created
       else
@@ -43,11 +47,14 @@ class PeriodsController < ApplicationController
   private
   
   def get_design
+    # If we don't find a design, then that's a BAD REQUEST
     head :bad_request unless @design = Design.find(params[:design_id])
   end
   
   def get_period
     if @design
+      # We get the period from the design's periods array, so we
+      # KNOW that this period is embedded in the right design.
       head :not_found unless @period = @design.periods.find(params[:id])
     end
   end
