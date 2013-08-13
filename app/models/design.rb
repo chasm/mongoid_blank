@@ -4,7 +4,6 @@ class Design
   
   embeds_many :periods
   
-  field :id, type: String
   field :title, type: String
   
   validates_presence_of :id

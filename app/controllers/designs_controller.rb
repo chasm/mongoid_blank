@@ -10,6 +10,14 @@ class DesignsController < ApplicationController
   def show
     head :not_found unless @design
   end
+  
+  def create
+    if @design = Design.create(design_params)
+      render :show, status: :created
+    else
+      render :errors, status: :unprocessable_entity
+    end
+  end
 
   def update
     if @design
@@ -19,11 +27,7 @@ class DesignsController < ApplicationController
         render :errors, status: :unprocessable_entity
       end
     else
-      if @design = Design.create(design_params)
-        render :show, status: :created
-      else
-        render :errors, status: :unprocessable_entity
-      end
+      head :not_found
     end
   end
 
@@ -47,6 +51,6 @@ class DesignsController < ApplicationController
   end
   
   def design_params
-    params.require(:design).permit(:id, :title)
+    params.require(:design).permit(:title)
   end
 end

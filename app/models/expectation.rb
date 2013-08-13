@@ -3,7 +3,6 @@ class Expectation
   
   embedded_in :period
   
-  field :id, type: String
   field :behavior, type: String
   
   validates_presence_of :id

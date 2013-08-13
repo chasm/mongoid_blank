@@ -13,6 +13,16 @@ class ExpectationsController < ApplicationController
   def show
     head :not_found unless @expectation
   end
+  
+  def create
+    if @period
+      if @expectation = @period.expectations.create!(expectation_params)
+        render :show, status: :created
+      else
+        render :errors, status: :unprocessable_entity
+      end
+    end
+  end
 
   def update
     if @expectation
@@ -22,13 +32,7 @@ class ExpectationsController < ApplicationController
         render :errors, status: :unprocessable_entity
       end
     else
-      if @period
-        if @expectation = @period.expectations.create!(expectation_params)
-          render :show, status: :created
-        else
-          render :errors, status: :unprocessable_entity
-        end
-      end
+      head :not_found
     end
   end
 

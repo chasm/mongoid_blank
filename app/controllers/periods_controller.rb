@@ -13,6 +13,16 @@ class PeriodsController < ApplicationController
   def show
     head :not_found unless @period
   end
+  
+  def create
+    if @design
+      if @period = @design.periods.create!(period_params)
+        render :show, status: :created
+      else
+        render :errors, status: :unprocessable_entity
+      end
+    end
+  end
 
   def update
     if @period
@@ -22,13 +32,7 @@ class PeriodsController < ApplicationController
         render :errors, status: :unprocessable_entity
       end
     else
-      if @design
-        if @period = @design.periods.create!(period_params)
-          render :show, status: :created
-        else
-          render :errors, status: :unprocessable_entity
-        end
-      end
+      head :not_found
     end
   end
 
@@ -55,7 +59,6 @@ class PeriodsController < ApplicationController
   
   def period_params
     params.require(:period).permit(
-      :id,
       :name,
       :activity,
       :starts_at,
