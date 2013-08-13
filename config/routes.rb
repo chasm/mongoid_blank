@@ -4,9 +4,21 @@ MongoidBlank::Application.routes.draw do
   
   resources :designs, except: [:new, :create, :edit], defaults: { format: :json } do
     resources :periods, except: [:new, :create, :edit], defaults: { format: :json } do
-      resources :expectations, except: [:new, :create, :edit], defaults: { format: :json }
+      resources :expectations, except: [:new, :create, :edit], defaults: { format: :json } do
+        member do
+          get ':attribute' => "expectations#attribute"
+        end
+      end
+    
+      member do
+        get ':attribute' => "periods#attribute"
+      end
+    end
+    
+    member do
+      get ':attribute' => "designs#attribute"
     end
   end
 
-  root "formats#index", defaults: { format: :json }
+  root "designs#index", defaults: { format: :json }
 end

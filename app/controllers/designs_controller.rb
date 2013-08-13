@@ -36,6 +36,18 @@ class DesignsController < ApplicationController
     end
   end
   
+  def attribute
+    if (attr = params[:attribute]) &&
+      %w(id title created_at updated_at).include?(attr)
+      
+      out = Hash.new
+      out[attr] = @design.send(attr)
+      render :json => out
+    else
+      head :bad_request
+    end
+  end
+  
   private
   
   def get_design

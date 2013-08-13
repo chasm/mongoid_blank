@@ -39,6 +39,18 @@ class ExpectationsController < ApplicationController
     end
   end
   
+  def attribute
+    if (attr = params[:attribute]) &&
+      %w(id behavior).include?(attr)
+      
+      out = Hash.new
+      out[attr] = @expectation.send(attr)
+      render :json => out
+    else
+      head :bad_request
+    end
+  end
+  
   private
   
   def get_design_and_period

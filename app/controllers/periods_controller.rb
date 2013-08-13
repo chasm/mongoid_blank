@@ -41,6 +41,18 @@ class PeriodsController < ApplicationController
     end
   end
   
+  def attribute
+    if (attr = params[:attribute]) &&
+      %w(id name activity starts_at ends_at).include?(attr)
+      
+      out = Hash.new
+      out[attr] = @period.send(attr)
+      render :json => out
+    else
+      head :bad_request
+    end
+  end
+  
   private
   
   def get_design
