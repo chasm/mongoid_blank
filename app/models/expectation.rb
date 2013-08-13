@@ -5,6 +5,5 @@ class Expectation
   
   field :behavior, type: String
   
-  validates_presence_of :id
   validates_presence_of :behavior
 end

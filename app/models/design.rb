@@ -6,6 +6,5 @@ class Design
   
   field :title, type: String
   
-  validates_presence_of :id
   validates_presence_of :title
 end

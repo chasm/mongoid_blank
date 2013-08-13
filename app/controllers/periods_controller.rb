@@ -11,7 +11,6 @@ class PeriodsController < ApplicationController
   end
 
   def show
-    head :not_found unless @period
   end
   
   def create
@@ -31,8 +30,6 @@ class PeriodsController < ApplicationController
       else
         render :errors, status: :unprocessable_entity
       end
-    else
-      head :not_found
     end
   end
 
@@ -40,8 +37,6 @@ class PeriodsController < ApplicationController
     if @period
       @period.destroy
       head :no_content
-    else
-      head :not_found
     end
   end
   
@@ -53,7 +48,7 @@ class PeriodsController < ApplicationController
   
   def get_period
     if @design
-      @period = @design.periods.find(params[:id])
+      head :not_found unless @period = @design.periods.find(params[:id])
     end
   end
   

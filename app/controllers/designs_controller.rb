@@ -43,10 +43,6 @@ class DesignsController < ApplicationController
   private
   
   def get_design
-    if params[:design]
-      params[:design][:id] = params[:id]
-    end
-    
     @design = Design.find(params[:id])
   end
   

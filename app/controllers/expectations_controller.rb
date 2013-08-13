@@ -11,7 +11,6 @@ class ExpectationsController < ApplicationController
   end
 
   def show
-    head :not_found unless @expectation
   end
   
   def create
@@ -31,8 +30,6 @@ class ExpectationsController < ApplicationController
       else
         render :errors, status: :unprocessable_entity
       end
-    else
-      head :not_found
     end
   end
 
