@@ -43,12 +43,28 @@ class DesignsController < ApplicationController
     if (attr = params[:attribute]) &&
       %w(id title created_at updated_at).include?(attr)
       
-      # Create a hash with this attribute and its value
-      out = Hash.new
-      out[attr] = @design.send(attr)
+      # If the attribute is present in the body of the request
+      # as opposed to just in the URL, then this is a patch
+      # request to update the attribute, so let's do so
+      if params[attr]
+        # The setter is the getter with an = appended (e.g., title=)
+        # The second parameter here is passed as the argument to
+        # the setter
+        if @design.__send__(attr.to_s + "=", params[attr])
+          @design.save
+          head :no_content
+        else
+          head :bad_request
+        end
+      else
+        # Create a hash with this attribute and its value
+        out = Hash.new
+        out[attr] = @design.__send__(attr)
+        
+        # Render the hash as JSON
+        render :json => out
+      end
       
-      # Render the hash as JSON
-      render :json => out
     else
       # No attribute or not in list? Bad request
       head :bad_request

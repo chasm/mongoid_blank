@@ -45,9 +45,22 @@ class PeriodsController < ApplicationController
     if (attr = params[:attribute]) &&
       %w(id name activity starts_at ends_at).include?(attr)
       
-      out = Hash.new
-      out[attr] = @period.send(attr)
-      render :json => out
+      if params[attr]
+        if @period.__send__(attr.to_s + "=", params[attr])
+          @period.save
+          head :no_content
+        else
+          head :bad_request
+        end
+      else
+        # Create a hash with this attribute and its value
+        out = Hash.new
+        out[attr] = @period.__send__(attr)
+        
+        # Render the hash as JSON
+        render :json => out
+      end
+      
     else
       head :bad_request
     end

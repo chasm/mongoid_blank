@@ -10,6 +10,7 @@ MongoidBlank::Application.routes.draw do
         # and pass it to the attribute action on the controller
         member do
           get ':attribute' => "expectations#attribute"
+          patch ':attribute' => "expectations#attribute"
         end
       end
     
@@ -18,11 +19,13 @@ MongoidBlank::Application.routes.draw do
       # is not interpreted as looking for the expectations attribute
       member do
         get ':attribute' => "periods#attribute"
+        patch ':attribute' => "periods#attribute"
       end
     end
     
     member do
       get ':attribute' => "designs#attribute"
+      patch ':attribute' => "designs#attribute"
     end
   end
 

@@ -43,9 +43,23 @@ class ExpectationsController < ApplicationController
     if (attr = params[:attribute]) &&
       %w(id behavior).include?(attr)
       
-      out = Hash.new
-      out[attr] = @expectation.send(attr)
-      render :json => out
+      # See the designs controller for an explanation
+      if params[attr]
+        if @expectation.__send__(attr.to_s + "=", params[attr])
+          @expectation.save
+          head :no_content
+        else
+          head :bad_request
+        end
+      else
+        # Create a hash with this attribute and its value
+        out = Hash.new
+        out[attr] = @expectation.__send__(attr)
+        
+        # Render the hash as JSON
+        render :json => out
+      end
+      
     else
       head :bad_request
     end
