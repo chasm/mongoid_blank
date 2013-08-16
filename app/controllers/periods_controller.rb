@@ -2,7 +2,7 @@ class PeriodsController < ApplicationController
   respond_to :json
   
   before_action :get_design
-  before_action :get_period, except: [ :index, :create ]
+  before_action :get_period, except: [ :index ]
   
   def index
     if @design

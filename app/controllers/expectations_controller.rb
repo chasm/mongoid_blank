@@ -2,7 +2,7 @@ class ExpectationsController < ApplicationController
   respond_to :json
   
   before_action :get_design_and_period
-  before_action :get_expectation, except: [ :index, :create ]
+  before_action :get_expectation, except: [ :index ]
   
   def index
     if @period
