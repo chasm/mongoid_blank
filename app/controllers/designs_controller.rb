@@ -1,7 +1,7 @@
 class DesignsController < ApplicationController
   respond_to :json
   
-  before_action :get_design, except: [ :index, :create ]
+  before_action :get_design, except: [ :index ]
   
   def index
     @designs = Design.all.entries
