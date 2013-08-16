@@ -44,7 +44,7 @@ class DesignsController < ApplicationController
         render :errors, status: :unprocessable_entity
       end
     end
-    # Otherwise, we fall through to the no content status set
+    # Otherwise, we fall through to the not found status set
     # in the get_design method below.
   end
 
@@ -55,7 +55,7 @@ class DesignsController < ApplicationController
       @design.destroy
       head :no_content
     end
-    # Otherwise, we fall through to the no content status set
+    # Otherwise, we fall through to the not found status set
     # in the get_design method below.
   end
   
