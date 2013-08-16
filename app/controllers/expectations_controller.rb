@@ -2,7 +2,7 @@ class ExpectationsController < ApplicationController
   respond_to :json
   
   before_action :get_design_and_period
-  before_action :get_expectation, except: [ :index, :create ]
+  before_action :get_expectation, except: [ :index ]
   
   def index
     if @period
@@ -46,8 +46,12 @@ class ExpectationsController < ApplicationController
       # See the designs controller for an explanation
       if params[attr]
         if @expectation.__send__(attr.to_s + "=", params[attr])
-          @expectation.save
-          head :no_content
+          if @expectation.save
+            head :no_content
+          else
+            render :errors, status: :unprocessable_entity
+          end
+
         else
           head :bad_request
         end

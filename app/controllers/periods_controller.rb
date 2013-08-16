@@ -2,7 +2,7 @@ class PeriodsController < ApplicationController
   respond_to :json
   
   before_action :get_design
-  before_action :get_period, except: [ :index, :create ]
+  before_action :get_period, except: [ :index ]
   
   def index
     if @design
@@ -47,8 +47,11 @@ class PeriodsController < ApplicationController
       
       if params[attr]
         if @period.__send__(attr.to_s + "=", params[attr])
-          @period.save
-          head :no_content
+          if @period.save
+            head :no_content
+          else
+            render :errors, status: :unprocessable_entity
+          end
         else
           head :bad_request
         end

@@ -1,7 +1,7 @@
 class DesignsController < ApplicationController
   respond_to :json
   
-  before_action :get_design, except: [ :index, :create ]
+  before_action :get_design, except: [ :index ]
   
   def index
     @designs = Design.all.entries
@@ -51,8 +51,11 @@ class DesignsController < ApplicationController
         # The second parameter here is passed as the argument to
         # the setter
         if @design.__send__(attr.to_s + "=", params[attr])
-          @design.save
-          head :no_content
+          if @design.save
+            head :no_content
+          else
+            render :errors, status: :unprocessable_entity
+          end
         else
           head :bad_request
         end
