@@ -1,5 +1,11 @@
-<div class="row">
+<script type="text/javascript">
+  var designer_uuids = <%= get_uuids(100).to_s.html_safe %>;
+</script>
+<section id="designs-list-section" class="row">
   <div class="col-lg-6">
+    <p class="design-form-nav pull-right">
+      <a class="btn btn-info pull-right designer-links" href="/designer/add">Add a Design</a>
+    </p>
     <h1>Report Designs</h1>
     <table id="report-designs-table" class="table table-bordered table-striped">
       <thead>
@@ -7,10 +13,38 @@
           <th>ID</th>
           <th>Title</th>
           <th># of Periods</th>
+          <th>&nbsp;</th>
         </tr>
       </thead>
       <tbody>
       </tbody>  
     </table>
   </div>
-</div>
+</section>
+<section id="designs-show-section" class="row" style="display:none">
+  <div class="col-lg-6">
+    <p class="design-form-nav pull-right">
+      <a href="/designer" class="btn btn-info designer-links">List All</a>
+    </p>
+    <h1 id="design-title-heading"></h1>
+    <p id="number-of-periods"></p>
+  </div>
+</section>
+<section id="designs-form-section" class="row" style="display:none">
+  <div class="col-lg-6">
+    <p class="design-form-nav pull-right">
+      <a href="/designer" class="btn btn-info designer-links">List All</a>
+    </p>
+    <h1 id="design-form-heading"></h1>
+    <form id="design-form">
+      <p>
+        <label for="design-title">Title</label>
+        <input type="hidden" id="design-id" name="design-id" value="">
+        <input type="text" id="design-title" name="design-title" value="" placeholder="Design Title">
+      </p>
+      <p>
+        <input type="submit" id="design-submit" class="btn btn-warning" value="Save">
+      </p>
+    </form>
+  </div>
+</section>

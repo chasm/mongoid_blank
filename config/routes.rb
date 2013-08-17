@@ -1,6 +1,9 @@
 MongoidBlank::Application.routes.draw do
   
   get "designer" => "designer#index"
+  get "designer/new" => "designer#index"
+  get "designer/:id" => "designer#index"
+  get "designer/:id/edit" => "designer#index"
   
   scope :api do
     get "uuids" => "site#uuids", defaults: { format: :json }
